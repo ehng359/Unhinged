@@ -86,4 +86,5 @@ int main() {
 	rt.insert("toast", 0);
 	rt.insert("tom", 1);
 	rt.insert("text", 2);
+	int* p = rt.search("tom");
 }

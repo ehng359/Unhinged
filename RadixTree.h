@@ -29,7 +29,9 @@ template <typename ValueType>
 RadixTree<ValueType>::RadixTree() {}
 
 template <typename ValueType> inline
-RadixTree<ValueType>::~RadixTree() {}
+RadixTree<ValueType>::~RadixTree() {
+
+}
 
 template <typename ValueType> inline
 void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
@@ -79,7 +81,22 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 
 template <typename ValueType> inline
 ValueType* RadixTree<ValueType>::search(std::string key) const {
-	return;
+	std::string k = key;
+	Node* iter = dummyNode.targetNode[k.at(0)];
+	if (!iter)
+		return nullptr;
+	while (iter && k != "") {
+		if (iter->label == k)
+			return &(iter->targetNode[END_WORD]->val);
+		else if (iter->label == k.substr(0, iter->label.size())) {
+			if (k.size() == iter->label.size())
+				return &(iter->targetNode[END_WORD]->val);
+			k = k.substr(iter->label.size());
+			iter = iter->targetNode[k.at(0)];
+		}
+		else
+			return nullptr;
+	}
 }
 
 #endif RADIX_TREE
