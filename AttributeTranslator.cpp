@@ -14,15 +14,20 @@ bool AttributeTranslator::Load(std::string filename) {
 	while (!input.eof()) {
 		stringIndex = 0; numCommas = 0;
 		std::getline(input, compat);
-		while (compat.at(stringIndex) != ',' || numCommas != 1)
+		if (compat == "")
+			return true;
+		while (numCommas <= 1) {
+			if (compat.at(stringIndex) == ',')
+				numCommas++;
 			stringIndex++;
+		}
 		std::string source = compat.substr(0, stringIndex - 1);
-		std::string associated = compat.substr(stringIndex + 1);
+		std::string associated = compat.substr(stringIndex);
 
 		stringIndex = 0;
 		while (associated.at(stringIndex) != ',')
 			stringIndex++;
-		std::string compatAtt = associated.substr(0, stringIndex - 1);
+		std::string compatAtt = associated.substr(0, stringIndex);
 		std::string	compatVal = associated.substr(stringIndex + 1);
 		std::vector<AttValPair> insert;
 		AttValPair first(compatAtt, compatVal);
