@@ -46,6 +46,7 @@ bool AttributeTranslator::Load(std::string filename) {
 	return true;
 }
 std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const AttValPair& source) const {
-	std::vector<AttValPair> v;
-	return v;
+	std::string sourceString = source.attribute + "," + source.value;
+	std::vector<AttValPair>* v = compAttMap.search(sourceString);
+	return *v;
 }

@@ -15,8 +15,9 @@ void PersonProfile::AddAttVAlPair(const AttValPair& attval) {
 	std::unordered_set<std::string>* holder = attTree.search(attval.attribute);
 	if (holder != nullptr) {
 		std::unordered_set<std::string>::iterator it = holder->find(attval.value);
-		if (it == holder->end())
+		if (it == holder->end()) {
 			holder->insert(attval.value);
+		}
 		return;
 	}
 	std::unordered_set<std::string> temp;

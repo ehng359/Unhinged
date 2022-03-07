@@ -24,7 +24,6 @@ private:
 		Node* targetNode [130];		// We'll have it so that the "target node" will have a label in place of the "letter" if there's only one relevant item
 	};								// We'll split it further into two different nodes once we insert a value such that it contains a "common factor".
 	Node dummyNode;
-	// Perhaps place associated values / Attribute pairs
 };
 // Indicator €
 template <typename ValueType>
@@ -60,8 +59,6 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 	else {
 		int numConsec = 0;
 		std::string temp;
-		if (key == "trait,narrow")
-			std::cout << "hi" << std::endl;
 		while (true) {
 			temp = "";
 			numConsec = 0;

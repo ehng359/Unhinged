@@ -81,10 +81,18 @@
 //}
 
 #include "RadixTree.h"
+#include "AttributeTranslator.h"
+#include "MemberDatabase.h"
 int main() {
 	RadixTree<int> rt;
 	rt.insert("toast", 0);
 	rt.insert("tom", 1);
 	rt.insert("text", 2);
 	int* p = rt.search("tom");
+
+	AttributeTranslator it;
+	it.Load("translator.txt");
+
+	MemberDatabase mb;
+	mb.LoadDataFile("members.txt");
 }

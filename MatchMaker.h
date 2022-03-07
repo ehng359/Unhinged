@@ -8,6 +8,6 @@
 class MatchMaker {
 	MatchMaker();
 	~MatchMaker();
-	std::vector<EmailCount> IdentifyRankedMatches(std::string email, int threshold) const
+	std::vector<EmailCount> IdentifyRankedMatches(std::string email, int threshold) const;
 };
 #endif // ! MATCH_MAKER
