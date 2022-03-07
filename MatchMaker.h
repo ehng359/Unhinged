@@ -3,6 +3,7 @@
 // MAY have any private member functions or variables you choose to add
 #include <vector>
 #include "provided.h"
+#include "utility.h"
 #include "MemberDatabase.h"
 #include "AttributeTranslator.h"
 #include "PersonProfile.h"

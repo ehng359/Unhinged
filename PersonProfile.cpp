@@ -17,6 +17,9 @@ void PersonProfile::AddAttVAlPair(const AttValPair& attval) {
 		std::unordered_set<std::string>::iterator it = holder->find(attval.value);
 		if (it == holder->end()) {
 			holder->insert(attval.value);
+			AttValPair* newPair = new AttValPair(attval.attribute, attval.value);
+			totalAtt.insert(newPair);
+			numAttVals += 1;
 		}
 		return;
 	}

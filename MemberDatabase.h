@@ -10,7 +10,7 @@ class MemberDatabase {
 public:
 	MemberDatabase();
 	~MemberDatabase();
-	bool LoadDataFile(std::string filename);
+	bool LoadDatabase(std::string filename);
 	std::vector<std::string> FindingMatchingMembers(const AttValPair& input) const;
 	const PersonProfile* GetMemberByEmail(std::string email) const;
 private:
