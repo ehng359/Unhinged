@@ -7,15 +7,17 @@ AttributeTranslator::~AttributeTranslator() {
 }
 bool AttributeTranslator::Load(std::string filename) {
 	std::fstream input(filename);
-	if (input.eof())
+	if (!input.is_open() || input.eof())
 		return false;
 	std::string compat;
 	int stringIndex = 0, numCommas = 0;
 	while (!input.eof()) {
 		stringIndex = 0; numCommas = 0;
 		std::getline(input, compat);
-		if (compat == "")
+		if (compat == "") {
+			input.close();
 			return true;
+		}
 		while (numCommas <= 1) {
 			if (compat.at(stringIndex) == ',')
 				numCommas++;
@@ -43,6 +45,7 @@ bool AttributeTranslator::Load(std::string filename) {
 			temp->push_back(first);
 		}
 	}
+	input.close();
 	return true;
 }
 std::vector<AttValPair> AttributeTranslator::FindCompatibleAttValPairs(const AttValPair& source) const {

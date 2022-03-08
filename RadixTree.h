@@ -18,6 +18,10 @@ private:
 		Node(Node* prev = nullptr) : label(""), targetNode{ 0 } {
 			parent = prev;
 		}
+		~Node() {
+			if (this != nullptr)
+				delete this;
+		}
 		std::string label;
 		ValueType val;
 		Node* parent;
@@ -66,7 +70,7 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 				temp += k.at(numConsec);
 				numConsec++;
 			}
-			if (numConsec == k.size() && numConsec < iter->label.size()) {
+			if (numConsec == k.size() && numConsec != iter->label.size()) {
 				Node* subseq = new Node(iter->parent);
 				subseq->label = k;
 				iter->label = iter->label.substr(numConsec);
@@ -77,7 +81,7 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 				subseq->targetNode[END_WORD]->val = value;
 				return;
 			}
-			if (numConsec < k.size() && numConsec < iter->label.size()) {
+			if (numConsec != k.size() && numConsec != iter->label.size()) {
 				k = k.substr(numConsec);
 				iter->label = iter->label.substr(numConsec);
 				Node* subseq = new Node(iter->parent);
@@ -108,69 +112,6 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 				iter = t;
 			}
 		}
-		/*while ((numConsec != k.size() && numConsec != iter->label.size()) && k.at(numConsec) == iter->label.at(numConsec)) {
-			temp += k.at(numConsec);
-			numConsec++;
-		}*/
-		/*if (iter->label.substr(numConsec) != k.substr(numConsec))
-			if (iter->label.substr(numConsec) == "") {
-				k = k.substr(numConsec);
-				if (iter->targetNode[k.at(0)] == nullptr) {
-					iter->targetNode[k.at(0)] = new Node(iter);
-					iter = iter->targetNode[k.at(0)];
-					iter->targetNode[END_WORD] = new Node(iter);
-					iter->targetNode[END_WORD]->val = value;
-					iter->label = k;
-				}
-				else {
-					iter = iter->targetNode[k.at(0)];
-					numConsec = 0;
-					temp = "";
-					while ((numConsec != k.size() && numConsec != iter->label.size()) && k.at(numConsec) == iter->label.at(numConsec)) {
-						temp += k.at(numConsec);
-						numConsec++;
-					}
-					k = k.substr(numConsec);
-					if (iter->targetNode[k.at(0)] == nullptr) {
-						iter->targetNode[k.at(0)] = new Node(iter);
-						iter = iter->targetNode[k.at(0)];
-						iter->targetNode[END_WORD] = new Node(iter);
-						iter->targetNode[END_WORD]->val = value;
-						iter->label = k;
-					}
-					else {
-						Node* subseq = new Node(iter->parent);
-						subseq->label = temp;
-						iter->parent->targetNode[subseq->label.at(0)] = subseq;
-						iter->parent = subseq;
-						iter->label = iter->label.substr(numConsec);
-						subseq->targetNode[k.at(0)] = iter;
-						iter = subseq;
-
-						iter->targetNode[k.at(0)] = new Node(iter);
-						iter = iter->targetNode[k.at(0)];
-						iter->targetNode[END_WORD] = new Node(iter);
-						iter->targetNode[END_WORD]->val = value;
-						iter->label = k;
-					}
-				}
-			}
-			else {
-				iter->label = iter->label.substr(numConsec);
-				k = k.substr(numConsec);
-				Node* subseq = new Node(iter->parent);
-				subseq->label = temp;
-				iter->parent->targetNode[subseq->label.at(0)] = subseq;
-				iter->parent = subseq;
-				subseq->targetNode[iter->label.at(0)] = iter;
-
-				iter = subseq;
-				iter->targetNode[k.at(0)] = new Node(iter);
-				iter = iter->targetNode[k.at(0)];
-				iter->targetNode[END_WORD] = new Node(iter);
-				iter->targetNode[END_WORD]->val = value;
-				iter->label = k;
-			}*/
 	}
 	return;
 }

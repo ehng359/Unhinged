@@ -7,12 +7,13 @@ MemberDatabase::~MemberDatabase() {
 }
 bool MemberDatabase::LoadDatabase(std::string filename) {
 	std::fstream input(filename);
-	if (input.eof())
+	if (!input.is_open() || input.eof())
 		return false;
 	std::string name, email, totalAtt;
 	while (!input.eof()) {
 		getline(input, name);
 		if (name == "") {
+			input.close();
 			return true;
 		}
 		getline(input, email);
@@ -20,7 +21,7 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 		PersonProfile* p = new PersonProfile(name, email);
 		EmailToProfile.insert(email, p);
 		int totalAttVals = 0;
-		for (int i = 0; i < totalAtt.size(); i++) {
+		for (int i = 0; i != totalAtt.size(); i++) {
 			totalAttVals += totalAtt.at(i) - '0';
 			totalAttVals *= 10;
 		}
@@ -44,6 +45,8 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 		}
 		getline(input, avp);
 	}
+	input.close();
+	return true;
 }
 std::vector<std::string> MemberDatabase::FindingMatchingMembers(const AttValPair& input) const {
 	std::string attValConvert = input.attribute + "," + input.value;

@@ -1,7 +1,17 @@
 #include "PersonProfile.h"
 PersonProfile::PersonProfile(std::string name, std::string email) : m_name(name), m_email(email), numAttVals(0) {
 }
-PersonProfile::~PersonProfile() {};
+PersonProfile::~PersonProfile() {
+	for (std::unordered_set<AttValPair*>::iterator it = totalAtt.begin(); it != totalAtt.end();) {
+		if (*it != nullptr) {
+			delete* it;
+			it = totalAtt.erase(it);
+		}
+		else {
+			it++;
+		}
+	}
+};
 
 std::string PersonProfile::GetName() const {
 	return m_name;
