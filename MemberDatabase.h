@@ -16,5 +16,7 @@ public:
 private:
 	RadixTree<std::vector<std::string>> AttValToEmail;
 	RadixTree<PersonProfile*> EmailToProfile;
+
+	std::vector<PersonProfile*> holder;
 };
 #endif // ! MATCH_MAKER

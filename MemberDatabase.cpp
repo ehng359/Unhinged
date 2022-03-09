@@ -3,7 +3,8 @@
 #include "MemberDatabase.h"
 MemberDatabase::MemberDatabase() {}
 MemberDatabase::~MemberDatabase() {
-
+	for (int i = 0; i != holder.size(); i++)
+		delete holder[i];
 }
 bool MemberDatabase::LoadDatabase(std::string filename) {
 	std::fstream input(filename);
@@ -19,6 +20,7 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 		getline(input, email);
 		getline(input, totalAtt);
 		PersonProfile* p = new PersonProfile(name, email);
+		holder.push_back(p);
 		EmailToProfile.insert(email, p);
 		int totalAttVals = 0;
 		for (int i = 0; i != totalAtt.size(); i++) {

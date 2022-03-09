@@ -13,13 +13,13 @@ public:
 	void insert(std::string key, const ValueType& value);
 	ValueType* search(std::string key) const;
 private:
-	const unsigned int END_WORD = 129;
+	const unsigned int END_WORD = 129;		// Location for the "value node" of the Radix Tree.
 	struct Node {
-		Node(Node* prev = nullptr) : label(""), targetNode{ 0 } {
+		Node(Node* prev = nullptr) : label(""), targetNode{ 0 } {	// Initialization of each Node when created.
 			parent = prev;
 		}
-		~Node() {
-			if (this != nullptr)
+		~Node() {					// Every Node is newly allocated and thus
+			if (this != nullptr)	// will deallocate itself once the program terminates.
 				delete this;
 		}
 		std::string label;
@@ -27,11 +27,13 @@ private:
 		Node* parent;
 		Node* targetNode [130];		// We'll have it so that the "target node" will have a label in place of the "letter" if there's only one relevant item
 	};								// We'll split it further into two different nodes once we insert a value such that it contains a "common factor".
-	Node dummyNode;
+	Node* dummyNode;
 };
 // Indicator €
 template <typename ValueType>
-RadixTree<ValueType>::RadixTree() {}
+RadixTree<ValueType>::RadixTree() {
+	dummyNode = new Node;
+}
 
 template <typename ValueType> inline
 RadixTree<ValueType>::~RadixTree() {
@@ -41,10 +43,10 @@ RadixTree<ValueType>::~RadixTree() {
 template <typename ValueType> inline
 void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 	std::string k = key;
-	Node* iter = dummyNode.targetNode[k.at(0)];
+	Node* iter = dummyNode->targetNode[k.at(0)];
 	if (iter == nullptr) {
-		dummyNode.targetNode[k.at(0)] = new Node(&dummyNode);
-		iter = dummyNode.targetNode[k.at(0)];
+		dummyNode->targetNode[k.at(0)] = new Node(dummyNode);
+		iter = dummyNode->targetNode[k.at(0)];
 		iter->label = k;
 		iter->targetNode[END_WORD] = new Node(iter);
 		iter = iter->targetNode[END_WORD];
@@ -119,7 +121,7 @@ void RadixTree<ValueType>::insert(std::string key, const ValueType& value) {
 template <typename ValueType> inline
 ValueType* RadixTree<ValueType>::search(std::string key) const {
 	std::string k = key;
-	Node* iter = dummyNode.targetNode[k.at(0)];
+	Node* iter = dummyNode->targetNode[k.at(0)];
 	if (!iter)
 		return nullptr;
 	while (iter && k != "") {
@@ -137,4 +139,4 @@ ValueType* RadixTree<ValueType>::search(std::string key) const {
 	return nullptr;
 }
 
-#endif RADIX_TREE
+#endif

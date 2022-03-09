@@ -9,6 +9,18 @@ bool operator<(const AttValPair& att, const AttValPair& att2) {
 	return false;
 }
 
+std::string AttValToString(const AttValPair& att) {
+    return att.attribute + "," + att.value;
+}
+
+AttValPair StringToAttval(const std::string& str) {
+    std::istringstream i(str);
+    std::string att, val;
+    std::getline(i, att, ',');
+    val = str.substr(att.size() + 1);
+    return AttValPair(att, val);
+}
+
 namespace std
 {
     template <>

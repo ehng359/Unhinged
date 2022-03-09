@@ -10,7 +10,8 @@ MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at)
 MatchMaker::~MatchMaker() {}
 
 std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int threshold) const {
-	int total = 0;
+	if (threshold <= 0)
+		threshold = 1;
 	std::unordered_map<std::string, int> MatchMap;
 	std::vector<AttValPair> compatPairs;
 	std::vector<std::string> matching;
