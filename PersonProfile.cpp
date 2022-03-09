@@ -3,8 +3,8 @@ PersonProfile::PersonProfile(std::string name, std::string email) : m_name(name)
 }
 PersonProfile::~PersonProfile() {
 	for (std::unordered_set<AttValPair*>::iterator it = totalAtt.begin(); it != totalAtt.end();) {
-		if (*it != nullptr) {
-			delete* it;
+		if (*it != nullptr) {			// For each dynamically allocated AttValPair to keep track of and maintain,
+			delete* it;					// delete them.  ... unnecessary dynamic allocation?
 			it = totalAtt.erase(it);
 		}
 		else {
@@ -21,9 +21,9 @@ std::string PersonProfile::GetEmail() const {
 	return m_email;
 }
 
-void PersonProfile::AddAttVAlPair(const AttValPair& attval) {
-	std::unordered_set<std::string>* holder = attTree.search(attval.attribute);
-	if (holder != nullptr) {
+void PersonProfile::AddAttVAlPair(const AttValPair& attval) {				
+	std::unordered_set<std::string>* holder = attTree.search(attval.attribute);		// If the attribute-value pair tree doesn't already
+	if (holder != nullptr) {														// contain the 
 		std::unordered_set<std::string>::iterator it = holder->find(attval.value);
 		if (it == holder->end()) {
 			holder->insert(attval.value);
@@ -48,7 +48,7 @@ int PersonProfile::GetNumAttValPairs() const {
 bool PersonProfile::GetAttVal(int attribute_num, AttValPair& attval) const {
 	if (attribute_num >= numAttVals)
 		return false;
-	std::unordered_set<AttValPair*>::iterator it = totalAtt.begin();
+	std::unordered_set<AttValPair*>::const_iterator it = totalAtt.begin();
 	for (int i = 0; i < attribute_num; i++)
 		it++;
 	attval = *(*it);

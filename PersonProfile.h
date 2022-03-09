@@ -8,13 +8,13 @@
 #define PERSON_PROFILE
 class PersonProfile {
 public:
-	PersonProfile(std::string name, std::string email);
-	~PersonProfile();
-	std::string GetName() const;
-	std::string GetEmail() const;
-	void AddAttVAlPair(const AttValPair& attval);
-	int GetNumAttValPairs() const;
-	bool GetAttVal(int attribute_num, AttValPair& attval) const;
+	PersonProfile(std::string name, std::string email);	// Constructor for the PersonProfile class.
+	~PersonProfile();									// Destructor for the PersonProfile class.
+	std::string GetName() const;	// Retrieve a person's name.
+	std::string GetEmail() const;	// Retrieve a person's email.
+	void AddAttVAlPair(const AttValPair& attval);	// Adding AttValPairs to a person's list of attributes.
+	int GetNumAttValPairs() const;					// Retrieving the number of total attributes one has.
+	bool GetAttVal(int attribute_num, AttValPair& attval) const;	// Retrieve a particular AttValPair, provided an index.
 private:
 	std::string m_name;
 	std::string m_email;

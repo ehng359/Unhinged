@@ -19,9 +19,9 @@ class AttributeTranslator {
 public:
 	AttributeTranslator();
 	~AttributeTranslator();
-	bool Load(std::string filename);
-	std::vector<AttValPair> FindCompatibleAttValPairs(const AttValPair& source) const;
-private:
-	RadixTree<std::vector<AttValPair>> compAttMap;
+	bool Load(std::string filename);	// Load's all corresponding compatible attributes mapped to their related attributes.
+	std::vector<AttValPair> FindCompatibleAttValPairs(const AttValPair& source) const;	// Returns a list of compatiable attributes
+private:																				// given a certain AttValPair.
+	RadixTree<std::vector<AttValPair>> compAttMap;	// A Radix Tree containing a vector of AttValPairs which contain all compatiable attributes.
 };
 #endif
