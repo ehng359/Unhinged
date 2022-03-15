@@ -2,6 +2,15 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <map>
+
+bool operator>(const EmailCount& a, const EmailCount& b) {
+	if (a.count > b.count)
+		return true;
+	else if (a.count == b.count)
+		return a.email < b.email;
+	return false;
+}
+
 MatchMaker::MatchMaker(const MemberDatabase& mdb, const AttributeTranslator& at) {
 	this->mdb = &mdb;
 	this->at = &at;
@@ -40,5 +49,6 @@ std::vector<EmailCount> MatchMaker::IdentifyRankedMatches(std::string email, int
 			eCount.push_back(EmailCount(it->first, it->second));
 		}
 	}
+	std::sort(eCount.begin(), eCount.end(), operator>);
 	return eCount;
 }
