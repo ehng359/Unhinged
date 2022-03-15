@@ -1,6 +1,7 @@
 //MAY use the STL listand vector classes
 //MAY have any private member functions or variables you choose to add
 #include <string>
+#include "utility.h"
 #include "provided.h"
 #include "RadixTree.h"
 #ifndef  MEMBER_DATABASE

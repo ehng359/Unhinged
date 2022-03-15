@@ -2,8 +2,7 @@
 #include <unordered_set>
 #include "provided.h"
 #include "RadixTree.h"
-// MAY use the STL list, vector, set, and unordered_set classes
-// MAY have any private member functions or variables you choose to add
+
 #ifndef PERSON_PROFILE
 #define PERSON_PROFILE
 class PersonProfile {
@@ -12,7 +11,7 @@ public:
 	~PersonProfile();									// Destructor for the PersonProfile class.
 	std::string GetName() const;	// Retrieve a person's name.
 	std::string GetEmail() const;	// Retrieve a person's email.
-	void AddAttVAlPair(const AttValPair& attval);	// Adding AttValPairs to a person's list of attributes.
+	void AddAttValPair(const AttValPair& attval);	// Adding AttValPairs to a person's list of attributes.
 	int GetNumAttValPairs() const;					// Retrieving the number of total attributes one has.
 	bool GetAttVal(int attribute_num, AttValPair& attval) const;	// Retrieve a particular AttValPair, provided an index.
 private:

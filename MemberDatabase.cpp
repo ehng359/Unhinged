@@ -32,11 +32,12 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 		std::string avp; int division = 0;
 		for (int i = 0; i < totalAttVals; i++) {		// For each AttValPair for the individual,
 			getline(input, avp);
-			while (avp.at(division) != ',')
-				division++;
-			AttValPair personAtt(avp.substr(0, division), avp.substr(division + 1));	// Create a AttvalPair for the person
-			p->AddAttVAlPair(personAtt);												// based on the input provided and
-			std::vector<std::string>* emails = AttValToEmail.search(avp);				// add it into their profile.
+			//while (avp.at(division) != ',')
+			//	division++;
+			//AttValPair personAtt(avp.substr(0, division), avp.substr(division + 1));	// Create a AttvalPair for the person
+			AttValPair personAtt = StringToAttVal(avp);									// based on the input provided and
+			p->AddAttValPair(personAtt);												// add it into their profile.
+			std::vector<std::string>* emails = AttValToEmail.search(avp);				
 			if (emails == nullptr) {			// If the vector of emails for a certain trait doesn't exist,
 				std::vector<std::string> v;		// create one and push the current person's email into it before inserting
 				v.push_back(email);				// it into the Radix Tree.
@@ -51,9 +52,11 @@ bool MemberDatabase::LoadDatabase(std::string filename) {
 	return true;
 }
 std::vector<std::string> MemberDatabase::FindingMatchingMembers(const AttValPair& input) const {
-	std::string attValConvert = input.attribute + "," + input.value;
+	std::string attValConvert = AttValToString(input);
 	std::vector<std::string>* allMatchingMembers = AttValToEmail.search(attValConvert); // Find all members' emails containing a particular trait.
-	return *allMatchingMembers;															// Return a copy of such vector.
+	if (allMatchingMembers != nullptr)													// If such search returns a valid pointer to the vector,
+		return *allMatchingMembers;														// Return a copy of such vector.
+	return std::vector<std::string>();													// Otherwise return an empty vector.
 }
 const PersonProfile* MemberDatabase::GetMemberByEmail(std::string email) const {
 	PersonProfile** person = EmailToProfile.search(email);							// Find a pointer to a PersonProfile based on their

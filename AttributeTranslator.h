@@ -13,6 +13,7 @@
 #include <fstream>
 #include "provided.h"
 #include "RadixTree.h"
+#include "utility.h"
 #ifndef ATT_TRANS
 #define ATT_TRANS
 class AttributeTranslator {
